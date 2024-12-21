@@ -104,7 +104,7 @@ const Attendance = () => {
       {loading ? (
         <p className="text-center text-gray-600">Loading classes...</p>
       ) : error ? (
-        <p className="text-center text-red-500">{error}</p>
+        <p className="text-center text-red-500">no class room allotted to you </p>
       ) : classes.length > 0 ? (
         <div>
           <h2 className="text-2xl font-semibold text-gray-700 mb-6">
