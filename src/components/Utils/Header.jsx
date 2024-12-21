@@ -11,6 +11,13 @@ const Header = () => {
     dispatch(clearUser());
   };
 
+  const getDashboardLink = () => {
+    if (user?.user?.role === 'admin') return '/admin/dashboard';
+    if (user?.user?.role === 'teacher') return '/teacher/dashboard';
+    if (user?.user?.role === 'student') return '/student/dashboard';
+    return '/';
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b">
       <div className="container mx-auto px-4">
@@ -22,15 +29,7 @@ const Header = () => {
           <nav className="hidden md:flex items-center space-x-8">
             {user?.user && (
               <Link
-                to={`${
-                  user.role === 'admin'
-                    ? '/admin/dashboard'
-                    : user.role === 'teacher'
-                    ? '/teacher/dashboard'
-                    : user.role === 'student'
-                    ? '/student/dashboard'
-                    : '/'
-                }`}
+                to={getDashboardLink()}
                 className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
               >
                 Dashboard
@@ -61,9 +60,9 @@ const Header = () => {
                 </Link>
               </>
             ) : (
-              <Link to="/" onClick={handleLogout}>
-                <button>Logout</button>
-              </Link>
+              <button onClick={handleLogout} className="btn">
+                Logout
+              </button>
             )}
           </div>
         </div>
