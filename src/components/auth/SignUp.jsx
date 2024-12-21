@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Spinner from "../Utils/Spinner";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const SignUp = () => {
     role: "student",
   });
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false); // New state for spinner
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,27 +28,32 @@ const SignUp = () => {
       return;
     }
 
+    setLoading(true); // Start spinner
     try {
-      const response = await axios.post(`https://attendify-backend-qe4c.onrender.com/api/auth/signup`, {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-        role: formData.role,
+      const response = await axios.post(
+        `https://attendify-backend-qe4c.onrender.com/api/auth/signup`,
+        {
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+        }
+      );
+      toast.success("Sign-up successful!");
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        role: "student",
       });
-        toast.success("Sign-up successful!");
-        setFormData({
-          username: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-          role: "student",
-        });
-        setError(null);
+      setError(null);
     } catch (err) {
       console.log(err);
-      
       setError(err.response?.data?.message || "An error occurred.");
       toast.error(err.response?.data?.message || "An error occurred.");
+    } finally {
+      setLoading(false); // Stop spinner
     }
   };
 
@@ -120,8 +127,13 @@ const SignUp = () => {
             <button
               type="submit"
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={loading} // Disable button while loading
             >
-              Sign Up
+              {loading ? (
+                <Spinner />
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </div>
         </form>
