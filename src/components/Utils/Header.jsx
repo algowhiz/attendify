@@ -24,7 +24,7 @@ const Header = () => {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
-            {user != null && <Link to={`${user?.role == "admin" ? '/admin/dashboard' : user.role == "teacher" ? "/teacher/dashboard" : user.role == "student" ? '/student/dashboard' : ''}`} className="text-sm font-medium text-gray-700 hover:text-primary transition-colors">
+            {user?.user != null && <Link to={`${user?.role == "admin" ? '/admin/dashboard' : user.role == "teacher" ? "/teacher/dashboard" : user.role == "student" ? '/student/dashboard' : ''}`} className="text-sm font-medium text-gray-700 hover:text-primary transition-colors">
               Dashboard
             </Link>}
             <Link to="/" className="text-sm font-medium text-gray-700 hover:text-primary transition-colors">
@@ -42,7 +42,7 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center space-x-4">
-            {user.user === null ?
+            {user?.user === null ?
               <>
                 <Link to="/login">
                   <button variant="outline">Log in</button>
