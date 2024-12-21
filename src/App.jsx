@@ -15,6 +15,7 @@ import Attendance from './components/teacher/Attendance';
 import SendNotice from './components/teacher/SendNotice';
 import ViewNotice from './components/student/ViewNotice';
 import CourseDetails from './components/admin/CourseDetails';
+import NotFound from './components/Utils/NotFound';
 
 const HomePage = () => (
   <>
@@ -65,6 +66,7 @@ const App = () => {
             <Route path="send-notices" element={<SendNotice />} />
           </Route>
           <Route path="/courses/:courseId" element={<CourseDetails/>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
     </Router>
